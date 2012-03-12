@@ -1,0 +1,18 @@
+pid: <%= pid_dir %><%= name %>.pid
+timeout: <%= timeout %>
+log: <%= log_dir %><%= name %>.log
+max_conns: <%= max_conns %>
+environment: <%= environment %>
+max_persistent_conns: <%= max_persistent_conns %>
+servers: <%= servers %>
+daemonize: <%= daemonize %>
+socket: <%= socket_dir %><%= name %>.sock
+chdir: <%= chdir %>
+user: <%= user %>
+group: <%= group %>
+<% if thin_require == true -%>
+  require: [<%= config_dir %>/<%= name %>.rb]
+<% end -%>
+<% additional_lines.each do |line| -%>
+  <%= line %>
+<% end -%>
