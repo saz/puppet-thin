@@ -18,7 +18,7 @@ define thin::conf(
   $additional_lines = []
 ) {
   include thin::params
-  require Class['thin']
+  require thin
 
   validate_bool($daemonize, $thin_require)
   validate_array($additional_lines)
