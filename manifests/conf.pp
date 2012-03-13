@@ -49,7 +49,7 @@ define thin::conf(
       ensure  => file,
       owner   => 'root',
       group   => 'root',
-      mode    => '0640',
+      mode    => '0644',
       content => template('thin/app-require.rb.erb'),
       notify  => Service[$service],
       require => File["${config_dir}${name}.yml"],
