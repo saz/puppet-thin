@@ -11,7 +11,7 @@ chdir: <%= chdir %>
 user: <%= user %>
 group: <%= group %>
 <% if thin_require == true -%>
-require: [<%= config_dir %>/<%= name %>.rb]
+require: [<%= config_dir %><%= name %>.rb]
 <% end -%>
 <% additional_lines.each do |line| -%>
 <%= line %>
