@@ -41,7 +41,7 @@ define thin::conf(
     mode    => '0644',
     content => template('thin/app-config.yml.erb'),
     notify  => Service[$service],
-    require => Class['thin'],
+    require => File[$config_dir],
   }
 
   if $thin_require == true {
@@ -64,31 +64,31 @@ define thin::conf(
       mode    => '0750',
       force   => true,
       notify  => Service[$service],
-      require => Class['thin'],
+      require => File[$config_dir],
     }
   }
 
   if !defined(File[$pid_dir]) {
     file { $pid_dir:
-      ensure => directory,
-      owner  => 'root',
-      group  => $group,
-      mode   => '0775',
-      force  => true,
-      notify => Service[$service],
-      require => Class['thin'],
+      ensure  => directory,
+      owner   => 'root',
+      group   => $group,
+      mode    => '0775',
+      force   => true,
+      notify  => Service[$service],
+      require => File[$config_dir],
     }
   }
 
   if !defined(File[$socket_dir]) {
     file { $socket_dir:
-      ensure => directory,
-      owner  => 'root',
-      group  => $group,
-      mode   => '0775',
-      force  => true,
-      notify => Service[$service],
-      require => Class['thin'],
+      ensure  => directory,
+      owner   => 'root',
+      group   => $group,
+      mode    => '0775',
+      force   => true,
+      notify  => Service[$service],
+      require => File[$config_dir],
     }
   }
 }
