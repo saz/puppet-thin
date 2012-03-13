@@ -86,4 +86,12 @@ class thin(
     require => Package[$package],
     notify  => Service[$service],
   }
+
+  service { $service:
+    ensure     => $service_ensure_real,
+    enable     => $service_enable,
+    hasstatus  => $service_hasstatus,
+    hasrestart => $service_hasrestart,
+    require    => Package[$package],
+  }
 }
