@@ -2,7 +2,7 @@ define thin::conf(
   $chdir,
   $user,
   $group,
-  $timeout = 30,
+  $thin_timeout = 30,
   $rails_environment = 'production',
   $log_dir = '/var/log/thin/',
   $pid_dir = '/var/run/thin/',
@@ -18,7 +18,6 @@ define thin::conf(
   $additional_lines = []
 ) {
   include thin::params
-  require thin
 
   validate_bool($thin_daemonize, $thin_require)
   validate_array($additional_lines)
@@ -42,6 +41,7 @@ define thin::conf(
     mode    => '0644',
     content => template('thin/app-config.yml.erb'),
     notify  => Service[$service],
+    require => Class['thin'],
   }
 
   if $thin_require == true {
@@ -52,17 +52,19 @@ define thin::conf(
       mode    => '0640',
       content => template('thin/app-require.rb.erb'),
       notify  => Service[$service],
+      require => File["${config_dir}${name}.yml"],
     }
   }
 
   if !defined(File[$log_dir]) {
     file { $log_dir:
-      ensure => directory,
-      owner  => $user,
-      group  => $group,
-      mode   => '0750',
-      force  => true,
-      notify => Service[$service],
+      ensure  => directory,
+      owner   => $user,
+      group   => $group,
+      mode    => '0750',
+      force   => true,
+      notify  => Service[$service],
+      require => Class['thin'],
     }
   }
 
@@ -74,6 +76,7 @@ define thin::conf(
       mode   => '0775',
       force  => true,
       notify => Service[$service],
+      require => Class['thin'],
     }
   }
 
@@ -85,6 +88,7 @@ define thin::conf(
       mode   => '0775',
       force  => true,
       notify => Service[$service],
+      require => Class['thin'],
     }
   }
 }
