@@ -11,6 +11,7 @@ class thin::params {
       $service_enable = true
       $service_hasstatus = false
       $service_hasrestart = true
+      $service_pattern = 'thin server'
     }
     default: {
       fail("Unsupported platform: ${::operatingsystem}")

@@ -22,7 +22,8 @@ class thin(
   $service = $thin::params::service,
   $service_enable = $thin::params::service_enable,
   $service_hasstatus = $thin::params::service_hasstatus,
-  $service_hasrestart = $thin::params::service_hasrestart
+  $service_hasrestart = $thin::params::service_hasrestart,
+  $service_pattern = $thin::params::service_pattern
 ) inherits thin::params {
 
   validate_bool(
@@ -92,6 +93,7 @@ class thin(
     enable     => $service_enable,
     hasstatus  => $service_hasstatus,
     hasrestart => $service_hasrestart,
+    pattern    => $service_pattern,
     require    => Package[$package],
   }
 }
