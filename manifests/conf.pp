@@ -20,7 +20,7 @@ define thin::conf(
   include thin::params
   require thin
 
-  validate_bool($daemonize, $thin_require)
+  validate_bool($thin_daemonize, $thin_require)
   validate_array($additional_lines)
 
   validate_string(
